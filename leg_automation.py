@@ -5,18 +5,6 @@ from scipy import stats
 in_data = pd.read_csv(r"/Users/Ethan/Documents/code/yateslab/2.3 Cell 1 7a.txt",sep='\t')
 df = pd.DataFrame(in_data)
 #in_data = None
-base = df.loc[0:199] #first two second baseline
-MED = df.loc[200:299] #midline to ear up/down
-ED = df.loc[300:499] #ear down
-EDM = df.loc[500:599] #ear down to midline
-MID = df.loc[600:799] #second midline segment
-ME  = df.loc[800:899] #Midline to leg extension
-EX = df.loc[900:1099] #Leg Extension
-EM = df.loc[1100:1199] #Leg return to midline
-MID2 = df.loc[1200:1399] #third midline
-ELM = df.loc[1400:1499] #ear and leg movement
-EL = df.loc[1500:1699] #ear down and leg extension
-FIN = df.loc[1700:1799] #final return to midline
 
 headers = list(df.columns.values) #We seem to have a problem with not having consistent data names.
 data_name = headers[1] #This method should always get the name of the data (since it's always col2)
@@ -75,4 +63,5 @@ if np.absolute(baseline-Epeak) < np.absolute(baseline-Ipeak):
 	peaktime = Ipeakt
 	print(peaktype, peaktime)
 
-
+#Now you want to do this all over again 2 more times for t=8(n=800) to n=1101, and 1400-1701. 
+#Then compare size of peaks (???)
