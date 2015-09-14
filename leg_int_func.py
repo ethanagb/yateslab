@@ -6,6 +6,8 @@ in_data = pd.read_csv(r"/Users/Ethan/Documents/code/yateslab/2.3 Cell 1 7a.txt",
 df = pd.DataFrame(in_data)
 #in_data = None
 def peakfind(a,b,c):
+	peaktimes = []
+	peakmags =[]
 	starts = []
 	starts.append(int(a))
 	starts.append(int(b))
@@ -63,11 +65,23 @@ def peakfind(a,b,c):
 		if np.absolute(baseline-Epeak) > np.absolute(baseline-Ipeak):
 			peaktype = "Excitation"
 			peaktime = Epeakt
-			print(peaktype, peaktime)
+			peakmag = np.absolute(baseline-Epeak)
+			print(peaktype, peaktime, peakmag)
+			peaktimes.append(peaktime)
+			peakmags.append(peakmag)
+
 		if np.absolute(baseline-Epeak) < np.absolute(baseline-Ipeak):
 			peaktype = "Inhibition"
 			peaktime = Ipeakt
-			print(peaktype, peaktime)
+			peakmag = np.absolute(baseline-Ipeak)
+			print(peaktype, peaktime, peakmag*-1)
+			peaktimes.append(peaktime)
+			peakmags.append(peakmag)
+	print peaktimes
+	print peakmags
+	return peaktimes
+	return peakmags		
 
-#Now you want to do this all over again 2 more times for t=8(n=800) to n=1101, and 1400-1701. 
+#Now you want to do this all over again 2 more times for t=8(n=800) to n=1101, and 1400-1701.
+peakfind(200,800,1400) 
 #Then compare size of peaks (???)
