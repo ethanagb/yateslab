@@ -1,16 +1,11 @@
 %Leg Automation
 %Last Update: 10/2/15
 
-<<<<<<< HEAD
 function [y,peak_end2,base_mean,response_avg] = newleg(n)
 %FOR TESTING ONLY:
 %n=200; %195-305, 495-605, 795-905, 1095-1205, 1395-1505, 1695-1805
 %%%%%%%%%%%%
 filename = '/Users/Ethan/Downloads/2.3 Cell 1 7a.txt';
-=======
-function [peaktimes,peakmags] = newleg(n)
-filename = 'C:\Users\McCall Lab\Dropbox\McCall C75-76\C76 - Bertha\C76-14_Bertha_Raw-Data\C76-14_Bertha_Data_May_2015\C76-14_Bertha_05.22.2015\Int Text\0.01 bins\1.3 Cell 1 7a.txt';
->>>>>>> origin/master
 df = importdata(filename, '\t', 1);
 baseline = df.data(51:200,2);
 base_mean = mean(baseline);
@@ -19,13 +14,9 @@ thresh_down = 0.8*base_mean;
 
 pos_epeaks1 = [];
 pos_ipeaks1 = [];
-<<<<<<< HEAD
 maxcount=n+300;
 n=n-2;
 starting_n = n;
-=======
-maxcount=n+301;
->>>>>>> origin/master
 while n+5 <= maxcount
   avg = df.data(n:n+5,2);
   [p,~,~] = ranksum(avg,baseline);
@@ -40,13 +31,6 @@ while n+5 <= maxcount
       else
           disp(strcat(num2str(n),' Sig and False'))
       end 
-<<<<<<< HEAD
-=======
-      
-  else 
-       %disp(pos_ipeaks1)
-       %disp(pos_epeaks1)
->>>>>>> origin/master
   end
   n = n+1;
 end
@@ -63,12 +47,7 @@ for i = pos_epeaks1
    if avg > Epeak
         Epeak = avg;
 		Epeakt = i;
-<<<<<<< HEAD
         end
-=======
-        %disp(Epeak)
-   end
->>>>>>> origin/master
    
 end 
 if numel(pos_ipeaks1) > 0
@@ -87,27 +66,12 @@ else
 end 
 peaktimes=[];
 peakmags=[];
-<<<<<<< HEAD
-=======
-%peaktime=0;
-%something is going on with the empty ipeak array here 
-%disp(abs(baseline-Ipeak))
->>>>>>> origin/master
 disp(base_mean)
 disp('baseline')
 if abs(base_mean-Epeak) > abs(base_mean-Ipeak)
 		peaktype = 'Excitation';
-<<<<<<< HEAD
       	peaktime = Epeakt;
         peakmag = abs(base_mean-Epeak);
-=======
-        %disp(peaktype)
-		peaktime = Epeakt;
-        %disp(peaktime)
-		peakmag = abs(base_mean-Epeak);
-       % disp(peakmag)
-		disp([peaktype, peaktime, peakmag])
->>>>>>> origin/master
 		peaktimes = [peaktimes peaktime];
 		peakmags = [peakmags peakmag];
 		clearvars peakmag peaktype peaktime
@@ -117,16 +81,11 @@ if abs(base_mean-Epeak) < abs(base_mean-Ipeak)
 		peaktype = 'Inhibtion';
 		peaktime = Ipeakt;
 		peakmag = abs(base_mean-Ipeak);
-<<<<<<< HEAD
-=======
-		%disp([peaktype, peaktime, peakmag])
->>>>>>> origin/master
 		peaktimes = [peaktimes peaktime];
 		peakmags = [peakmags peakmag];
 		clearvars peakmag peaktype peaktime
 end
 disp(peaktimes)
-<<<<<<< HEAD
 
 n=5;
 p=0;
@@ -174,6 +133,3 @@ end
 
 
 
-=======
-end
->>>>>>> origin/master
