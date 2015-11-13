@@ -1,9 +1,9 @@
 %Leg Automation
 %Last Update: 10/2/15
 
-function [y,peak_end2,base_mean,response_avg] = newleg(n)
+function [y,peak_end2,base_mean,response_avg] = newleg(n);
 %FOR TESTING ONLY:
-n=200; %195-305, 495-605, 795-905, 1095-1205, 1395-1505, 1695-1805
+n=200; %195-305,495-605,795-905,1095-1205,1395-1505,1695-1805
 %%%%%%%%%%%%
 filename = 'C:\Users\McCall Lab\Dropbox\McCall C75-76\C75 - Patches\C75-14_Patches_Raw-Data\75-14_Patches_May_2015\75-14_Patches_05.22.2015\Int Text\0.01 bins\2.3 Cell 1 7a.txt';
 df = importdata(filename, '\t', 1);
