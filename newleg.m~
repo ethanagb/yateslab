@@ -1,7 +1,7 @@
 %Leg Automation
 %Last Update: 10/2/15
 
-function [y,peak_end2,base_mean,response_avg] = newleg(n);
+function [y,peak_end2,peak_type] = newleg(n);
 %FOR TESTING ONLY:
 n=200; %195-305,495-605,795-905,1095-1205,1395-1505,1695-1805
 %%%%%%%%%%%%
@@ -49,107 +49,8 @@ if excitatory_mag > inhibitory_mag
 else
     peaktype='I';
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%I think everything below here can be deleted%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Epeakt = 0;
-Epeak = 0 ;
-Eabs_dif = 0;
-Ipeakt = 0;
-Ipeak = 0 ;
-Iabs_dif = 0;
-for i = pos_epeaks1
-   avg =  mean(df.data(i:i+5,2));
-   %disp(i)
-  %disp(avg)
-   if avg > Epeak
-        Epeak = avg;
-		Epeakt = i;
-   end
-   
-end 
-if numel(pos_ipeaks1) > 0
-    for i = pos_ipeaks1
-       avg =  mean(df.data(i:i+5,2));
-       disp(i)
-       disp(avg)
-       if avg > Ipeak
-            Ipeak = avg;
-            Ipeakt = i;
-       end
-    end
+if  peaktype = 'E';
+    peakmean= excitatory_mean;
 else
-    Ipeak=0;
-    Ipeakt=0;
-end 
-peaktimes=[];
-peakmags=[];
-disp(base_mean)
-disp('baseline')
-if abs(base_mean-Epeak) > abs(base_mean-Ipeak)
-		peaktype = 'Excitation';
-      	peaktime = Epeakt;
-        peakmag = abs(base_mean-Epeak);
-		peaktimes = [peaktimes peaktime];
-		peakmags = [peakmags peakmag];
-		clearvars peakmag peaktype peaktime
+    peakmean = inhibitory_mean;
 end
-
-if abs(base_mean-Epeak) < abs(base_mean-Ipeak)
-		peaktype = 'Inhibtion';
-		peaktime = Ipeakt;
-		peakmag = abs(base_mean-Ipeak);
-		peaktimes = [peaktimes peaktime];
-		peakmags = [peakmags peakmag];
-		clearvars peakmag peaktype peaktime
-end
-
-n=5;
-p=0;
-movingmean=3*base_mean; %this is an arbtitary number to ensure next loops run. 
-
-while movingmean > 1.2*base_mean && n < cast(peaktimes,'int64')
-    peak_end = cast(peaktimes,'int64'); %placeholder for the peak center
-    peak_start = cast(peak_end,'int64')-n;
-    peak_end2 = peak_start + 5;
-    window = df.data(peak_start:peak_end2);
-    movingmean = mean(window);
-     n=n+1;
-     %this loop should set peak start (peak_start)
-end
-disp(peak_start)
-y = peak_start;
-movingmean=3*base_mean;
-m=5;
-while movingmean > 1.2*base_mean && m < cast(peaktimes,'int64')
-    peak_start2 = cast(peaktimes,'int64'); %placeholder for the peak center
-    peak_end = cast(peak_start2,'int64')+m;
-    peak_start3 = peak_end - 5;
-    window = df.data(peak_start3:peak_end);
-    movingmean = mean(window);
-    m=m+1;
-    %this loop should set peak end (peak_end)
-end 
-disp('Here')
-disp(m);
-disp(peak_end);
-
-%if less/greater than response, set to max/min of region
-%there are max ranges, if threshold is exceeded for a range beyond this.
-%set a limit. 
-if y < starting_n
-    y=starting_n;
-end
-if peak_end > starting_n+300
-    peak_end = starting_n+300;
-end
-disp('Response start:')
-disp(y)
-disp('Response end:')
-disp(peak_end)
-response_avg = mean(df.data(y:peak_end,2));
-end
-
-
-
-
