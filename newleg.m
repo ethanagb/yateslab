@@ -21,12 +21,10 @@ while n+5 <= maxcount
   [p,~,~] = ranksum(avg,baseline);
   if p <= 0.05
       if mean(avg) >= thresh_up
-          %disp('!')
           pos_epeaks1 = [pos_epeaks1 n];
           x = [0 cumsum(diff(pos_epeaks1)~=1)];
           pos_epeaks1(x==mode(x));
       elseif mean(avg) <= thresh_down
-        % disp(strcat(num2str(n),' Sig and True'))
         pos_ipeaks1 = [pos_ipeaks1 n];
         x = [0 cumsum(diff(pos_ipeaks1)~=1)];
         pos_ipeaks1(x==mode(x));
@@ -62,4 +60,3 @@ returnpeakstart = peak_start;
 returnpeakend = peak_end;
 returnpeakmean = peakmean;
 end
-
